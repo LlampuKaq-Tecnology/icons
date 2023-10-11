@@ -1,10 +1,19 @@
 {
-  "name": "icons",
+  "name": "@llampukaq/icons",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "description": "Use Tabler icons esay",
+  "main": "dist/icons/Icons.js",
+  "typings": "dist/icons/Icons.d.ts",
+  "repository": {
+    "directory": "",
+    "type": "github",
+    "url": "git+https://github.com/LlampuKaq-Tecnology/icons.git"
+  },
+  "author": "Llampukaq technology <llampukaq@llampukaq.com> (https://www.llampukaq.com/)",
   "scripts": {
     "dev": "next dev",
-    "npm": "npx tsc -p tsconfig-components.json ",
+    "ts": "npx tsc -p tsconfig-components.json ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -22,5 +31,15 @@
     "autoprefixer": "^10",
     "postcss": "^8",
     "tailwindcss": "^3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/LlampuKaq-Tecnology/icons/issues"
+  },
+  "homepage": "https://github.com/LlampuKaq-Tecnology/icons#readme",
+  "keywords": [
+    "react",
+    "icon",
+    "icons",
+    "nextjs"
+  ]
 }
