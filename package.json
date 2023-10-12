@@ -1,10 +1,13 @@
 {
   "name": "@llampukaq/icons",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "license": "MIT",
   "description": "Use Tabler icons esay",
-  "main": "dist/icons/Icons.js",
-  "typings": "dist/icons/Icons.d.ts",
+  "main": "dist/icons/index.js",
+  "typings": "dist/icons/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "directory": "",
     "type": "github",

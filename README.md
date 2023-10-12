@@ -4,9 +4,8 @@
 npm i @llampukaq/icons
 ```
 
-import Icons from "@llampukaq/icons";
-
 ```tsx
+import { Icons } from "@llampukaq/icons";
 export default function Home() {
   return (
     <>
