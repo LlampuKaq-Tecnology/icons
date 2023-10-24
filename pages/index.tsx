@@ -1,3 +1,12 @@
+import { Icons } from "@/icons";
+
 export default function Home() {
-  return <></>;
+  return (
+    <div className="h-screen bg-zinc-900 ">
+      <Icons icon="Icon123" />
+      <a href="">
+        <Icons icon="Icon123" />
+      </a>
+    </div>
+  );
 }
