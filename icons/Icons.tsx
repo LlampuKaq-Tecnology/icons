@@ -12,7 +12,7 @@ function calculateSVGHash(svgText: any) {
 }
 
 function Icons({ size = 24, color, icon, className }: IconsProps) {
-  const { className: cl } = useIcons();
+  const icons = useIcons();
   const [svg, setSvg] = useState<any>();
   const [svgHash, setSvgHash] = useState(0);
 
@@ -44,7 +44,7 @@ function Icons({ size = 24, color, icon, className }: IconsProps) {
     <div
       style={{ width: size }}
       id={`${uniqueId}`}
-      className={`${className ?? cl}`}
+      className={`${className ?? icons?.className}`}
       dangerouslySetInnerHTML={{ __html: svg || "" }}
     />
   );

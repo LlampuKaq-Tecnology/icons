@@ -1,6 +1,6 @@
 {
   "name": "@llampukaq/icons",
-  "version": "0.1.5",
+  "version": "0.1.51",
   "license": "MIT",
   "description": "Use Tabler icons esay",
   "main": "dist/icons/index.js",
@@ -18,14 +18,18 @@
     "dev": "next dev",
     "ts": "npx tsc -p tsconfig-components.json ",
     "build": "next build",
-    "start": "next start",
+    "start": "bun run j.js",
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
     "nanoid": "^5.0.2",
     "next": "13.5.4",
+    "puppeteer": "^21.4.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "selenium-webdriver": "^4.14.0"
   },
   "devDependencies": {
     "@types/node": "^20",
