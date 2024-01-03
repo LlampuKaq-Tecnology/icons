@@ -15,18 +15,17 @@ function Icons({ size = 24, color, icon, className }: IconsProps) {
   const icons = useIcons();
   const [svg, setSvg] = useState<any>();
   const [svgHash, setSvgHash] = useState(0);
-
-  const uniqueId = nanoid();
-
+  const uniqueId = nanoid(5);
   const svgUrl = `https://icons.llampukaq.com/${icon}.svg`;
   const res = useCallback(async () => {
     try {
-      const response = await fetch(svgUrl);
-      const svgText = await response.text();
-      const newSvgHash = calculateSVGHash(svgText);
+      let iconContent;
+      const response = await fetch(svgUrl, { cache: "force-cache" });
+      iconContent = await response.text();
+      const newSvgHash = calculateSVGHash(iconContent);
       if (newSvgHash !== svgHash) {
         const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+        const svgDoc = parser.parseFromString(iconContent, "image/svg+xml");
         const svgElement = svgDoc.querySelector(".icon");
         if (svgElement) {
           svgElement.setAttribute("width", size.toString());
@@ -35,11 +34,15 @@ function Icons({ size = 24, color, icon, className }: IconsProps) {
           setSvgHash(newSvgHash);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching icon:", error);
+    }
   }, [size, color, icon]);
+
   useEffect(() => {
     res();
   }, [icon, color, size]);
+
   return (
     <div
       style={{ width: size }}
