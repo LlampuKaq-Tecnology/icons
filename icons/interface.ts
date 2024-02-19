@@ -3,6 +3,7 @@ export interface IconsProps {
   size?: number;
   color?: string;
   className?: string;
+  stroke?: number;
 }
 export type ICONS =
   | "Icon123"

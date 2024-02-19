@@ -1,6 +1,6 @@
 {
   "name": "@llampukaq/icons",
-  "version": "0.1.51",
+  "version": "0.1.531",
   "license": "MIT",
   "description": "Use Tabler icons esay",
   "main": "dist/icons/index.js",

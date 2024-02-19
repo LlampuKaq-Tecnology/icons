@@ -1,38 +1,23 @@
-import { nanoid } from "nanoid";
 import React, { useCallback, useEffect, useState } from "react";
 import { IconsProps, useIcons } from ".";
-function calculateSVGHash(svgText: any) {
-  let hash = 0;
-  if (svgText.length === 0) return hash;
-  for (let i = 0; i < svgText.length; i++) {
-    const char = svgText.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-  }
-  return hash;
-}
 
-function Icons({ size = 24, color, icon, className }: IconsProps) {
+function Icons({ size = 24, color, icon, className, stroke = 2 }: IconsProps) {
   const icons = useIcons();
   const [svg, setSvg] = useState<any>();
-  const [svgHash, setSvgHash] = useState(0);
-  const uniqueId = nanoid(5);
   const svgUrl = `https://icons.llampukaq.com/${icon}.svg`;
   const res = useCallback(async () => {
     try {
-      let iconContent;
-      const response = await fetch(svgUrl, { cache: "force-cache" });
-      iconContent = await response.text();
-      const newSvgHash = calculateSVGHash(iconContent);
-      if (newSvgHash !== svgHash) {
-        const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(iconContent, "image/svg+xml");
-        const svgElement = svgDoc.querySelector(".icon");
-        if (svgElement) {
-          svgElement.setAttribute("width", size.toString());
-          svgElement.setAttribute("height", size.toString());
-          setSvg(svgElement.outerHTML);
-          setSvgHash(newSvgHash);
-        }
+      const response = await fetch(svgUrl);
+      const iconContent = await response.text();
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(iconContent, "image/svg+xml");
+      const svgElement = svgDoc.querySelector(".icon");
+      if (svgElement) {
+        svgElement.setAttribute("width", size.toString());
+        svgElement.setAttribute("height", size.toString());
+        svgElement.setAttribute("stroke-width", stroke.toString());
+        svgElement.removeAttribute("stroke");
+        setSvg(svgElement.outerHTML);
       }
     } catch (error) {
       console.error("Error fetching icon:", error);
@@ -41,16 +26,13 @@ function Icons({ size = 24, color, icon, className }: IconsProps) {
 
   useEffect(() => {
     res();
-  }, [icon, color, size]);
-
+  }, []);
   return (
     <div
       style={{ width: size }}
-      id={`${uniqueId}`}
-      className={`${className ?? icons?.className}`}
+      className={`${className ?? icons?.className ?? ""}`}
       dangerouslySetInnerHTML={{ __html: svg || "" }}
     />
   );
 }
-
-export default Icons;
+export default React.memo(Icons);

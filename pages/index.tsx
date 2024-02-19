@@ -2,26 +2,27 @@ import { Icons } from "@/icons";
 import { useState } from "react";
 
 export default function Home() {
-  const [value, setValue] = useState(false);
-  console.log(value);
+  const [show, setShow] = useState(false);
   return (
-    <div className=" bg-zinc-900 flex h-screen">
-      <Icons icon="Icon123" className="text-white" />
-      {value && (
-        <>
-          <Icons icon="IconAB2" className="text-blue-400" />
-          <Icons icon="Icon123" className="text-blue-400" />
-          <Icons icon="Icon360" className="text-blue-400" />
-        </>
-      )}
-
+    <div className=" bg-zinc-900 flex h-screen hover:text-yellow-500 stroke-slate-500">
       <button
         onClick={() => {
-          setValue(!value);
+          setShow(!show);
         }}
       >
-        si
+        show
       </button>
+      {show && (
+        <>
+          <Icons
+            className="stroke-white"
+            stroke={1.4}
+            size={30}
+            icon="Icon123"
+          />
+          <Icons size={30} icon="Icon123" />
+        </>
+      )}
     </div>
   );
 }
