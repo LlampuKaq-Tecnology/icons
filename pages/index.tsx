@@ -16,8 +16,8 @@ export default function Home() {
         <>
           <Icons
             className="stroke-white"
-            stroke={1.4}
-            size={30}
+            stroke={1}
+            size={40}
             icon="Icon123"
           />
           <Icons size={30} icon="Icon123" />

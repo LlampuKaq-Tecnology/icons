@@ -1,7 +1,6 @@
 export interface IconsProps {
   icon: ICONS;
   size?: number;
-  color?: string;
   className?: string;
   stroke?: number;
 }

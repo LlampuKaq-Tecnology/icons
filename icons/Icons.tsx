@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IconsProps, useIcons } from ".";
 
-function Icons({ size = 24, color, icon, className, stroke = 2 }: IconsProps) {
+function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
   const icons = useIcons();
   const [svg, setSvg] = useState<any>();
   const svgUrl = `https://icons.llampukaq.com/${icon}.svg`;
-  const res = useCallback(async () => {
+  const res = async () => {
     try {
       const response = await fetch(svgUrl);
       const iconContent = await response.text();
@@ -22,11 +22,11 @@ function Icons({ size = 24, color, icon, className, stroke = 2 }: IconsProps) {
     } catch (error) {
       console.error("Error fetching icon:", error);
     }
-  }, [size, color, icon]);
+  };
 
   useEffect(() => {
     res();
-  }, []);
+  }, [size, icon, stroke]);
   return (
     <div
       style={{ width: size }}
@@ -35,4 +35,4 @@ function Icons({ size = 24, color, icon, className, stroke = 2 }: IconsProps) {
     />
   );
 }
-export default React.memo(Icons);
+export default Icons;
