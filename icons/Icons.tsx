@@ -5,7 +5,7 @@ function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
   const icons = useIcons();
   const [svg, setSvg] = useState<any>();
   const svgUrl = `https://icons.llampukaq.com/${icon}.svg`;
-  const res = async () => {
+  const res = useCallback(async () => {
     try {
       const response = await fetch(svgUrl);
       const iconContent = await response.text();
@@ -22,7 +22,7 @@ function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
     } catch (error) {
       console.error("Error fetching icon:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     res();
@@ -35,4 +35,4 @@ function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
     />
   );
 }
-export default Icons;
+export default React.memo(Icons);
