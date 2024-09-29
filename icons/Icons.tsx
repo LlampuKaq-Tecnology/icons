@@ -1,13 +1,31 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IconsProps, useIcons } from ".";
 
 function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
   const icons = useIcons();
-  const [svg, setSvg] = useState<any>();
-
+  const svg = useSvgIcon(icon, size, stroke); // Usa el hook personalizado
+  return (
+    <div
+      style={{ width: size }}
+      className={`${className ?? icons?.className ?? ""}`}
+      dangerouslySetInnerHTML={{ __html: svg || "" }}
+    />
+  );
+}
+export default Icons;
+function useSvgIcon(icon: string, size: number, stroke: number) {
+  const [svg, setSvg] = useState<string | null>(null);
+  const svgCache = useRef<{ [key: string]: string }>({});
   const svgUrl = `https://icons.llampukaq.com/${icon}.svg`;
-  const res = async () => {
-    if (svg == undefined) {
+
+  useEffect(() => {
+    const fetchSvg = async () => {
+      if (svgCache.current[icon]) {
+        // Si el ícono ya está en la caché, usar el valor en lugar de hacer un fetch
+        setSvg(svgCache.current[icon]);
+        return;
+      }
+
       try {
         const response = await fetch(svgUrl);
         const iconContent = await response.text();
@@ -19,23 +37,20 @@ function Icons({ size = 24, icon, className, stroke = 2 }: IconsProps) {
           svgElement.setAttribute("height", size.toString());
           svgElement.setAttribute("stroke-width", stroke.toString());
           svgElement.removeAttribute("stroke");
-          setSvg(svgElement.outerHTML);
+
+          const svgString = svgElement.outerHTML;
+          svgCache.current[icon] = svgString; // Guardar el SVG en la caché
+          setSvg(svgString);
         }
       } catch (error) {
         console.error("Error fetching icon:", error);
       }
-    }
-  };
+    };
 
-  useEffect(() => {
-    res();
-  }, [size, icon, stroke]);
-  return (
-    <div
-      style={{ width: size }}
-      className={`${className ?? icons?.className ?? ""}`}
-      dangerouslySetInnerHTML={{ __html: svg || "" }}
-    />
-  );
+    if (!svg) {
+      fetchSvg();
+    }
+  }, [icon, size, stroke, svgUrl, svg]);
+
+  return svg;
 }
-export default React.memo(Icons);
